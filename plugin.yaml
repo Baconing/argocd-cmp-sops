@@ -1,20 +1,25 @@
-discover:
-  find:
+apiVersion: argoproj.io/v1alpha1
+kind: ConfigManagementPlugin
+metadata:
+  name: sops
+spec:
+  discover:
+    find:
+      command:
+        - sh
+        - -c
+        - |
+          find . \( -name '*.secret.yaml' -o -name 'secret.yaml' \) | grep .
+
+  generate:
     command:
       - sh
       - -c
       - |
-        find . \( -name '*.secret.yaml' -o -name 'secret.yaml' \) | grep .
+        find . \( -name '*.secret.yaml' -o -name 'secret.yaml' \) -exec sops --decrypt --in-place {} \;
 
-generate:
-  command:
-    - sh
-    - -c
-    - |
-      find . \( -name '*.secret.yaml' -o -name 'secret.yaml' \) -exec sops --decrypt --in-place {} \;
-
-      if [ -f kustomization.yaml ]; then
-        kustomize build .
-      else
-        find . -name '*.yaml' -print0 | xargs -0 cat
-      fi
+        if [ -f kustomization.yaml ]; then
+          kustomize build .
+        else
+          find . -name '*.yaml' -print0 | xargs -0 cat
+        fi
