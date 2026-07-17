@@ -26,3 +26,5 @@ RUN chown -R 999:999 /home/argocd/cmp-server/config
 ENV SOPS_AGE_KEY_FILE=/keys/keys.txt
 
 USER 999
+
+ENTRYPOINT ["/var/run/argocd/argocd-cmp-server"]

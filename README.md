@@ -24,8 +24,6 @@ repoServer:
   extraContainers:
     - name: sops
       image: ghcr.io/baconing/argocd-sops-cmp:latest
-      command:
-        - /var/run/argocd/argocd-cmp-server
       securityContext:
         runAsUser: 999
         runAsNonRoot: true
