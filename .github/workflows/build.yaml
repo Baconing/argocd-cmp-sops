@@ -3,7 +3,7 @@ name: Build and Push CMP Image
 on:
   push:
     branches:
-      - main
+      - master
     tags:
       - "v*"
 
