@@ -3,21 +3,21 @@ kind: ConfigManagementPlugin
 metadata:
   name: sops
 spec:
+  init:
+    command: ["sh", "-c"]
+    args:
+      - |
+        find . -type f \( -name '*.secret.yaml' -o -name 'secret.yaml' \) \
+          -exec sops --decrypt --in-place {} \;
+
   discover:
     find:
-      command:
-        - sh
-        - -c
-        - |
-          find . \( -name '*.secret.yaml' -o -name 'secret.yaml' \) | grep .
+      command: ["sh", "-c", "find . -name '*.secret.yaml' -o -name 'secret.yaml'"]
 
   generate:
-    command:
-      - sh
-      - -c
+    command: ["sh", "-c"]
+    args:
       - |
-        find . \( -name '*.secret.yaml' -o -name 'secret.yaml' \) -exec sops --decrypt --in-place {} \;
-
         if [ -f kustomization.yaml ]; then
           kustomize build .
         else
