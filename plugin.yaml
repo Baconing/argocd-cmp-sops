@@ -19,7 +19,7 @@ spec:
     args:
       - |
         if [ -f kustomization.yaml ]; then
-          kustomize build .
+          kustomize build ${ACS_KUSTOMIZE_OPTIONS:-} .
         else
           find . -name '*.yaml' -print0 | xargs -0 cat
         fi

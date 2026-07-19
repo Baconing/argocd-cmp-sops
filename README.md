@@ -44,3 +44,11 @@ repoServer:
       secret:
         secretName: sops-age-key
 ```
+
+### Environment Variables
+
+All environment variables used for configuration of this container are prefixed with `ACS_`
+
+| Variable                | Default      | Description                                                                                    |
+| :---------------------- | :----------- | :--------------------------------------------------------------------------------------------- |
+| `ACS_KUSTOMIZE_OPTIONS` | Empty String | Pass additional options to `kustomize build .` (e.g. `--load-restrictor LoadRestrictionsNone`) |
